@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arc & Bolt Store</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50">
+
+    <nav class="bg-black text-white p-4 sticky top-0 flex justify-between items-center shadow-lg">
+        <h1 class="text-xl font-black tracking-widest">ARC & BOLT</h1>
+    </nav>
+
+    <div class="p-4 max-w-md mx-auto">
+        <!-- Example Product -->
+        <div class="bg-white rounded-3xl shadow-sm border p-4 mb-4">
+            <img src="https://images.meesho.com/images/products/311025547/vmsae_512.webp" class="rounded-2xl w-full h-64 object-cover mb-4">
+            <h2 class="text-lg font-bold text-gray-800">Premium Single LNB - HATA</h2>
+            <p class="text-gray-500 text-sm mb-2">High-gain satellite receiver</p>
+            <div class="flex justify-between items-center">
+                <span class="text-2xl font-black text-blue-600">₹599</span>
+                <button onclick="payNow('Premium HATA LNB', 599)" class="bg-blue-600 text-white px-6 py-3 rounded-2xl font-bold">Buy Now</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden Checkout Logic -->
+    <script>
+        function payNow(product, amount) {
+            // Your UPI ID - Masked as much as possible by the app interface
+            const upiId = "7206486923@paytm"; 
+            const brandName = "ArcAndBolt";
+            
+            // This creates the secure UPI link
+            const upiUrl = `upi://pay?pa=${upiId}&pn=${brandName}&am=${amount}&tn=Order_${product}&cu=INR`;
+            
+            // 1. Open the Payment App
+            window.location.href = upiUrl;
+
+            // 2. Wait 3 seconds then ask for address via WhatsApp (to notify you)
+            setTimeout(() => {
+                const msg = `Hello Arc & Bolt! I just paid ₹${amount} for ${product}. Please ship it to: [Enter Your Name/Address Here]`;
+                const whatsappUrl = `https://wa.me/917206486923?text=${encodeURIComponent(msg)}`;
+                
+                if(confirm("Once payment is successful, click OK to send your delivery address and get notified on mobile.")){
+                    window.location.href = whatsappUrl;
+                }
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
